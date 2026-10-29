@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 88" fill="none" role="img" aria-labelledby="title">
+  <title id="title">TimeLuxe</title>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M34 5v10M34 73v10" stroke="#A9824E" stroke-width="4"/>
+    <circle cx="34" cy="44" r="27" stroke="#252523" stroke-width="2.6"/>
+    <circle cx="34" cy="44" r="22" stroke="#A9824E" stroke-width="1.2"/>
+    <path d="M34 28v16l11 7" stroke="#252523" stroke-width="2.2"/>
+    <circle cx="34" cy="44" r="1.8" fill="#A9824E"/>
+  </g>
+  <text x="78" y="55" fill="#252523" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="600" letter-spacing="-1.2">TimeLuxe</text>
+  <text x="81" y="75" fill="#8A7656" font-family="Arial, sans-serif" font-size="8.5" font-weight="600" letter-spacing="4.2">MAROC</text>
+</svg>
