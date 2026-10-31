@@ -21,6 +21,7 @@ export default function OrderStatus({ order }) {
         <div className="min-w-0 flex-1">
           <h3 className="text-sm font-semibold leading-5 text-[#302D27]">{product.name}</h3>
           <p className="mt-1 text-xs text-[#81796D]">{product.isBundle ? 'Pack Duo · 2 montres' : `Quantité : ${quantity}`}</p>
+          {product.selectedColor && <p className="mt-1 text-xs font-medium text-[#6E685E]">Couleur : {product.selectedColor}</p>}
         </div>
         <span className="shrink-0 text-sm font-semibold text-[#302D27]">{formatPrice(subtotal)}</span>
       </div>

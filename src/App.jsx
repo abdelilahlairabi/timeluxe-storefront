@@ -40,7 +40,11 @@ function AppContent() {
       handleOfferClick();
       return;
     }
-    setSelectedProduct(product);
+    const defaultVariant = product.variants?.[0];
+    const orderedProduct = product.selectedVariantId || !defaultVariant
+      ? product
+      : { ...product, image: defaultVariant.image, selectedColor: defaultVariant.label, selectedVariantId: defaultVariant.id };
+    setSelectedProduct(orderedProduct);
     setOrderDetails(null);
     setBundleSelection([]);
     navigate('/commande');
@@ -110,8 +114,9 @@ function AppContent() {
         path="/produit"
         element={
           <ProductDetailPage
+            key={selectedProduct.id}
             product={selectedProduct}
-            onBuyNow={() => handleOrderNow(selectedProduct)}
+            onBuyNow={handleOrderNow}
           />
         }
       />

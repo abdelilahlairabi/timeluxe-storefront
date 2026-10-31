@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-export default function ProductGallery({ product }) {
-  const images = product.gallery?.length ? product.gallery : [product.image];
+export default function ProductGallery({ product, image = product.image, selectedColor }) {
+  const images = product.gallery?.length ? product.gallery : [image];
   const [activeImage, setActiveImage] = useState(0);
 
   return (
     <div className="w-full">
       <div className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-[#F4F4F0] shadow-sm">
-        <img src={images[activeImage]} alt={`${product.name} — vue ${activeImage + 1}`} fetchPriority="high" className="aspect-square w-full object-cover" />
+        <img src={images[activeImage]} alt={`${product.name}${selectedColor ? ` — ${selectedColor}` : ''} — vue ${activeImage + 1}`} fetchPriority="high" className="aspect-square w-full object-cover" />
         <span className="absolute bottom-4 right-4 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-medium text-slate-700 shadow-sm">{activeImage + 1} / {images.length}</span>
       </div>
       {images.length > 1 && (

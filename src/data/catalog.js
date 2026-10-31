@@ -12,59 +12,94 @@ export const LAUNCH_OFFER = {
 export const PRODUCTS = [
   {
     id: 'hublot-ceramique-noir',
-    name: 'Hublot Céramique Squelette Noir',
+    name: 'Hublot Céramique Squelette',
     category: 'squelette',
     categoryLabel: 'Squelette',
     price: 199,
     image: '/timeluxe/00-shared/products/hublot-ceramique-squelette-noir.jpg',
+    variantLabel: 'Couleur du cadran',
+    variants: [
+      { id: 'noir', label: 'Noir', swatch: '#292927', image: '/timeluxe/00-shared/products/hublot-ceramique-squelette-noir.jpg' },
+      { id: 'vert', label: 'Vert', swatch: '#286346', image: '/timeluxe/00-shared/products/hublot-ceramique-squelette-vert.jpg' },
+    ],
   },
   {
     id: 'rolex-datejust-bleu',
-    name: 'Rolex Datejust Cadran Bleu',
+    name: 'Rolex Datejust',
     category: 'classique',
     categoryLabel: 'Classique',
     price: 199,
     image: '/timeluxe/00-shared/products/rolex-datejust-bleu.jpg',
+    variantLabel: 'Couleur du cadran',
+    variants: [
+      { id: 'bleu', label: 'Bleu', swatch: '#24427A', image: '/timeluxe/00-shared/products/rolex-datejust-bleu.jpg' },
+      { id: 'vert', label: 'Vert', swatch: '#286248', image: '/timeluxe/00-shared/products/rolex-datejust-vert.jpg' },
+    ],
   },
   {
     id: 'hublot-squelette-vert',
-    name: 'Hublot Squelette Vert',
+    name: 'Hublot Squelette',
     category: 'squelette',
     categoryLabel: 'Squelette',
     price: 199,
     image: '/timeluxe/00-shared/products/hublot-squelette-vert.jpg',
+    variantLabel: 'Couleur du cadran',
+    variants: [
+      { id: 'vert', label: 'Vert', swatch: '#5B762B', image: '/timeluxe/00-shared/products/hublot-squelette-vert.jpg' },
+      { id: 'bleu', label: 'Bleu', swatch: '#234C85', image: '/timeluxe/00-shared/products/hublot-squelette-bleu.jpg' },
+    ],
   },
   {
     id: 'hublot-chrono-argent',
-    name: 'Hublot Chronographe Argent',
+    name: 'Hublot Chronographe',
     category: 'chrono',
     categoryLabel: 'Chronographe',
     price: 199,
     image: '/timeluxe/00-shared/products/hublot-chronographe-argent.jpg',
+    variantLabel: 'Couleur du cadran',
+    variants: [
+      { id: 'argent', label: 'Argent', swatch: '#C7C8C5', image: '/timeluxe/00-shared/products/hublot-chronographe-argent.jpg' },
+      { id: 'noir', label: 'Noir', swatch: '#282A2A', image: '/timeluxe/00-shared/products/hublot-chronographe-noir.jpg' },
+    ],
   },
   {
     id: 'patek-philippe-vert-emeraude',
-    name: 'Patek Philippe Vert Émeraude',
+    name: 'Patek Philippe Cadran Texturé',
     category: 'classique',
     categoryLabel: 'Édition sertie',
     price: 199,
     image: '/timeluxe/00-shared/products/patek-philippe-vert-emeraude.jpg',
+    variantLabel: 'Couleur du cadran',
+    variants: [
+      { id: 'vert', label: 'Vert', swatch: '#236747', image: '/timeluxe/00-shared/products/patek-philippe-vert-emeraude.jpg' },
+      { id: 'bleu', label: 'Bleu', swatch: '#244E8C', image: '/timeluxe/00-shared/products/patek-philippe-cadran-bleu.jpg' },
+    ],
   },
   {
     id: 'cartier-roman-noir',
-    name: 'Cartier Cadran Romain Noir',
+    name: 'Cartier Cadran Romain',
     category: 'classique',
     categoryLabel: 'Classique',
     price: 199,
     image: '/timeluxe/00-shared/products/cartier-cadran-romain-noir.jpg',
+    variantLabel: 'Couleur du cadran',
+    variants: [
+      { id: 'blanc', label: 'Blanc', swatch: '#F6F3EA', image: '/timeluxe/00-shared/products/cartier-cadran-romain-noir.jpg' },
+      { id: 'bleu-nuit', label: 'Bleu nuit', swatch: '#193765', image: '/timeluxe/00-shared/products/cartier-cadran-bleu-nuit.jpg' },
+    ],
   },
   {
     id: 'patek-philippe-vert-serti',
-    name: 'Patek Philippe Vert Serti',
+    name: 'Patek Philippe Lunette Sertie',
     category: 'classique',
     categoryLabel: 'Édition sertie',
     price: 199,
     image: '/timeluxe/00-shared/products/patek-philippe-vert-serti.jpg',
+    variantLabel: 'Couleur des pierres',
+    variants: [
+      { id: 'vert-emeraude', label: 'Vert émeraude', swatch: '#16844F', image: '/timeluxe/00-shared/products/patek-philippe-vert-serti.jpg' },
+      { id: 'bleu-saphir', label: 'Bleu saphir', swatch: '#2460BD', image: '/timeluxe/00-shared/products/patek-philippe-serti-saphir.jpg' },
+    ],
   },
 ];
 
@@ -102,6 +137,7 @@ export function buildOrderMessage({ product, customer }) {
   } else {
     lines.push(
       `Produit : ${product.name}`,
+      ...(product.selectedColor ? [`Couleur : ${product.selectedColor}`] : []),
       `Quantité : ${quantity}`,
       `Prix : ${formatPrice(subtotal)}`,
     );

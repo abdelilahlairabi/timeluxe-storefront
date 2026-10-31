@@ -1,13 +1,40 @@
 import { ArrowRight, MapPin, MessageCircle, Wallet } from 'lucide-react';
 import { WHATSAPP_NUMBER, formatPrice } from '../../data/catalog';
 
-export default function ProductInfo({ product, onBuyNow }) {
-  const whatsappText = encodeURIComponent(`Bonjour TimeLuxe, j’ai une question sur ${product.name}.`);
+export default function ProductInfo({ product, selectedVariant, onSelectVariant, onBuyNow }) {
+  const selectedColorText = selectedVariant ? ` en coloris ${selectedVariant.label}` : '';
+  const whatsappText = encodeURIComponent(`Bonjour TimeLuxe, j’ai une question sur ${product.name}${selectedColorText}.`);
 
   return (
     <section className="flex flex-col rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm sm:p-7 lg:sticky lg:top-24 lg:h-fit">
       <span className="w-fit rounded-full bg-amber-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-900">{product.categoryLabel}</span>
       <h1 className="mt-4 font-serif text-3xl font-semibold leading-tight text-slate-950 sm:text-4xl">{product.name}</h1>
+      {product.variants?.length > 0 && (
+        <fieldset className="mt-5">
+          <legend className="mb-2.5 text-sm font-medium text-slate-700">
+            {product.variantLabel || 'Couleur'} : <span className="font-semibold text-slate-950">{selectedVariant?.label || product.variants[0].label}</span>
+          </legend>
+          <div className="flex flex-wrap gap-2">
+            {product.variants.map((variant) => {
+              const isSelected = variant.id === (selectedVariant?.id || product.variants[0].id);
+
+              return (
+                <button
+                  key={variant.id}
+                  type="button"
+                  onClick={() => onSelectVariant(variant.id)}
+                  aria-label={`${product.variantLabel || 'Couleur'} ${variant.label}`}
+                  aria-pressed={isSelected}
+                  className={`inline-flex min-h-10 items-center gap-2 rounded-full px-3 text-xs font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700 ${isSelected ? 'bg-[#F4EFE6] text-slate-950 ring-1 ring-[#C9B99F]' : 'bg-slate-50 text-slate-700 hover:bg-slate-100'}`}
+                >
+                  <span className="h-3.5 w-3.5 rounded-full border border-black/10" style={{ backgroundColor: variant.swatch }} aria-hidden="true" />
+                  {variant.label}
+                </button>
+              );
+            })}
+          </div>
+        </fieldset>
+      )}
       <div className="mt-4 flex items-baseline gap-3">
         <span className="text-2xl font-bold text-slate-950">{formatPrice(product.price)}</span>
         <span className="text-xs text-slate-500">Paiement à la livraison</span>
