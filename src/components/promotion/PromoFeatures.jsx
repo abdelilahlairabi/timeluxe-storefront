@@ -1,7 +1,7 @@
 import { MapPin, RefreshCw, Wallet } from 'lucide-react';
 
 const details = [
-  { icon: MapPin, text: <>Livraison partout<br />au Maroc</> },
+  { icon: MapPin, text: <>Livraison gratuite<br />partout au Maroc</> },
   { icon: Wallet, text: <>Paiement à<br />la livraison</> },
   { icon: RefreshCw, text: <>Échange<br />possible</> },
 ];

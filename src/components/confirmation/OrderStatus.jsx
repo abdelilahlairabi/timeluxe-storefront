@@ -52,7 +52,10 @@ export default function OrderStatus({ order }) {
         <div className="flex justify-between gap-4"><dt className="shrink-0 text-[#81796D]">Adresse</dt><dd className="max-w-[68%] text-right font-medium leading-5 text-[#302D27]">{customer.address}</dd></div>
         {customer.preferredModels?.trim() && <div className="flex justify-between gap-4"><dt className="shrink-0 text-[#81796D]">Préférences</dt><dd className="max-w-[68%] text-right font-medium text-[#302D27]">{customer.preferredModels}</dd></div>}
       </dl>
-      <div className="mt-5 flex justify-between gap-4 rounded-xl bg-[#F8F5EE] px-4 py-4 text-sm font-semibold text-[#24231F]"><dt>Total à payer à la livraison</dt><dd className="shrink-0">{formatPrice(total)}</dd></div>
+      <dl className="mt-5 space-y-3 rounded-xl bg-[#F8F5EE] px-4 py-4 text-sm">
+        <div className="flex justify-between gap-4 text-[#6E685E]"><dt>Livraison</dt><dd className="font-medium text-[#6F7658]">{DELIVERY_FEE === 0 ? 'Gratuite' : formatPrice(DELIVERY_FEE)}</dd></div>
+        <div className="flex justify-between gap-4 border-t border-[#E7E0D4] pt-3 font-semibold text-[#24231F]"><dt>Total à payer à la livraison</dt><dd className="shrink-0">{formatPrice(total)}</dd></div>
+      </dl>
     </section>
   );
 }

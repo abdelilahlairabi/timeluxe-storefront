@@ -46,7 +46,7 @@ export default function OrderSummary({ product, selectedBundleModelIds = {} }) {
       )}
       <dl className="space-y-3 pt-5 text-sm">
         <div className="flex justify-between gap-4 text-[#6E685E]"><dt>Sous-total</dt><dd className="text-[#302D27]">{formatPrice(subtotal)}</dd></div>
-        <div className="flex justify-between gap-4 text-[#6E685E]"><dt>Livraison</dt><dd className="font-medium text-[#6F7658]">{DELIVERY_FEE === 0 ? 'Offerte' : formatPrice(DELIVERY_FEE)}</dd></div>
+        <div className="flex justify-between gap-4 text-[#6E685E]"><dt>Livraison</dt><dd className="font-medium text-[#6F7658]">{DELIVERY_FEE === 0 ? 'Gratuite' : formatPrice(DELIVERY_FEE)}</dd></div>
         <div className="flex justify-between gap-4 border-t border-[#EAE5DC] pt-4 font-semibold text-[#24231F]"><dt>Total à la livraison</dt><dd>{formatPrice(total)}</dd></div>
       </dl>
     </section>

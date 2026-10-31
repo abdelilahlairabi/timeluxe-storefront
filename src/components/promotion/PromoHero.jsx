@@ -31,7 +31,7 @@ export default function PromoHero({ onClaim }) {
             {formatPrice(DUO_PACK.price)}
           </span>
         </div>
-        <p className="mt-4 hidden max-w-sm text-sm leading-6 text-white/75 lg:block">Choisissez vos deux modèles et profitez du Pack Duo à prix spécial, avec paiement à la livraison.</p>
+        <p className="mt-4 hidden max-w-sm text-sm leading-6 text-white/75 lg:block">Choisissez vos deux modèles et profitez du Pack Duo à prix spécial, avec livraison gratuite et paiement à la réception.</p>
         <button type="button" onClick={onClaim} className="mt-6 hidden min-h-12 items-center justify-center rounded-full bg-[#F4EBD9] px-6 text-sm font-semibold text-[#211D19] transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:inline-flex">
           Choisir mes deux montres
         </button>

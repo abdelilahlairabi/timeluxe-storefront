@@ -53,7 +53,7 @@ export default function CheckoutPage({ product, initialValues, onBack, onSubmit,
           </div>
         </div>
 
-        <p className="mx-auto mt-6 max-w-2xl text-center text-xs leading-5 text-[#777064]">{DELIVERY_FEE === 0 ? 'Livraison offerte partout au Maroc.' : 'Le montant de livraison est inclus au total affiché.'} Aucun débit en ligne ne sera effectué.</p>
+        <p className="mx-auto mt-6 max-w-2xl text-center text-xs leading-5 text-[#777064]">{DELIVERY_FEE === 0 ? 'Livraison gratuite partout au Maroc.' : 'Le montant de livraison est inclus au total affiché.'} Aucun débit en ligne ne sera effectué.</p>
       </main>
     </div>
   );

@@ -132,7 +132,7 @@ export default function BundleSelectionPage({ initialSelection = [], onSelection
             <p className="truncate text-sm font-semibold text-[#302D27]">
               {selection.length === 2 ? 'Votre Pack Duo est prêt' : `Choisissez encore ${remaining} montre${remaining > 1 ? 's' : ''}`}
             </p>
-            <p className="mt-0.5 text-xs text-[#81796D]">2 montres · {formatPrice(DUO_PACK.price)} · livraison offerte</p>
+            <p className="mt-0.5 text-xs text-[#81796D]">2 montres · {formatPrice(DUO_PACK.price)} · livraison gratuite</p>
           </div>
           <button type="button" onClick={() => setIsReviewOpen(true)} disabled={selection.length !== 2} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-[#25231F] px-4 text-xs font-semibold text-white transition hover:bg-[#403B33] disabled:cursor-not-allowed disabled:bg-[#B8B4AC] sm:px-5 sm:text-sm">
             Vérifier ma sélection <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -170,7 +170,7 @@ export default function BundleSelectionPage({ initialSelection = [], onSelection
             <div className="mt-5 rounded-xl bg-[#F3EFE7] p-4">
               <div className="flex justify-between gap-4 text-sm text-[#6E685E]"><span>2 montres au prix normal</span><span className="line-through">{formatPrice(DUO_PACK.compareAtPrice)}</span></div>
               <div className="mt-2 flex justify-between gap-4 text-sm font-semibold text-[#302D27]"><span>Offre Pack Duo</span><span>{formatPrice(DUO_PACK.price)}</span></div>
-              <p className="mt-2 text-xs font-medium text-[#6F7658]">Vous économisez {formatPrice(savings)} · livraison offerte</p>
+              <p className="mt-2 text-xs font-medium text-[#6F7658]">Vous économisez {formatPrice(savings)} · livraison gratuite</p>
             </div>
 
             <button type="button" onClick={() => onConfirm({ watchOne: selection[0], watchTwo: selection[1] })} className="mt-5 inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-[#25231F] px-5 text-sm font-semibold text-white transition hover:bg-[#403B33] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9B8058]">

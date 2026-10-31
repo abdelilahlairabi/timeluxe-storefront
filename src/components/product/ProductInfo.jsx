@@ -15,7 +15,7 @@ export default function ProductInfo({ product, onBuyNow }) {
       <p className="mt-4 text-sm leading-6 text-slate-600">Découvrez le style {product.categoryLabel.toLowerCase()} de ce modèle TimeLuxe dans notre collection.</p>
 
       <div className="my-6 divide-y divide-slate-100 border-y border-slate-100">
-        <div className="flex items-center gap-3 py-3.5 text-sm text-slate-700"><MapPin className="h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" /><span>Livraison partout au Maroc</span></div>
+        <div className="flex items-center gap-3 py-3.5 text-sm text-slate-700"><MapPin className="h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" /><span>Livraison gratuite partout au Maroc</span></div>
         <div className="flex items-center gap-3 py-3.5 text-sm text-slate-700"><Wallet className="h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" /><span>Réglez à la réception</span></div>
       </div>
 

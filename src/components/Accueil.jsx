@@ -94,7 +94,7 @@ export default function Accueil({ onProductClick, onOrderNow, onOfferClick }) {
             </details>
             <details className="group py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold">Livrez-vous dans ma ville ?<span className="text-xl font-normal text-amber-700 transition group-open:rotate-45">+</span></summary>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Oui. La livraison est offerte partout au Maroc. Le récapitulatif affiche le total à régler à la réception.</p>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Oui. La livraison est gratuite partout au Maroc. Le récapitulatif affiche le total à régler à la réception.</p>
             </details>
             <details className="group py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold">Comment fonctionne un échange ?<span className="text-xl font-normal text-amber-700 transition group-open:rotate-45">+</span></summary>
