@@ -1,14 +1,31 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Minus, Plus, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { DUO_PACK, PRODUCTS, formatPrice } from '../data/catalog';
+import { DUO_PACK, PRODUCTS, formatPrice, getProductSelectionDetails } from '../data/catalog';
 
 function getModelCount(selection, modelId) {
-  return selection.filter((selectedId) => selectedId === modelId).length;
+  return selection.filter((selected) => (typeof selected === 'string' ? selected : selected.productId) === modelId).length;
+}
+
+function normalizeSelection(selection) {
+  return selection.slice(0, 2).map((item) => {
+    if (typeof item === 'string') {
+      const product = PRODUCTS.find((entry) => entry.id === item);
+      return { productId: item, variantId: product?.variants?.[0]?.id || '' };
+    }
+    return item;
+  });
 }
 
 export default function BundleSelectionPage({ initialSelection = [], onSelectionChange, onConfirm, onBack }) {
-  const [selection, setSelection] = useState(() => initialSelection.slice(0, 2));
+  const [selection, setSelection] = useState(() => normalizeSelection(initialSelection));
+  const [selectedVariantIds, setSelectedVariantIds] = useState(() => {
+    const defaults = Object.fromEntries(PRODUCTS.map((product) => [product.id, product.variants?.[0]?.id || '']));
+    normalizeSelection(initialSelection).forEach((item) => {
+      if (item.productId && item.variantId) defaults[item.productId] = item.variantId;
+    });
+    return defaults;
+  });
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const savings = DUO_PACK.compareAtPrice - DUO_PACK.price;
 
@@ -28,16 +45,19 @@ export default function BundleSelectionPage({ initialSelection = [], onSelection
 
   const addModel = (modelId) => {
     if (selection.length >= 2) return;
-    updateSelection([...selection, modelId]);
+    const product = PRODUCTS.find((item) => item.id === modelId);
+    const variantId = selectedVariantIds[modelId] || product?.variants?.[0]?.id || '';
+    updateSelection([...selection, { productId: modelId, variantId }]);
   };
 
   const removeModel = (modelId) => {
-    const index = selection.lastIndexOf(modelId);
-    if (index < 0) return;
+    const reverseIndex = [...selection].reverse().findIndex((item) => (typeof item === 'string' ? item : item.productId) === modelId);
+    if (reverseIndex < 0) return;
+    const index = selection.length - reverseIndex - 1;
     updateSelection(selection.filter((_, itemIndex) => itemIndex !== index));
   };
 
-  const selectedModels = selection.map((modelId) => PRODUCTS.find((product) => product.id === modelId)).filter(Boolean);
+  const selectedModels = selection.map((item) => getProductSelectionDetails(item)).filter(Boolean);
   const remaining = 2 - selection.length;
 
   return (
@@ -87,11 +107,12 @@ export default function BundleSelectionPage({ initialSelection = [], onSelection
           {PRODUCTS.map((product) => {
             const count = getModelCount(selection, product.id);
             const isAtLimit = selection.length >= 2;
+            const selectedVariant = product.variants?.find((variant) => variant.id === selectedVariantIds[product.id]) || product.variants?.[0];
 
             return (
               <article key={product.id} className={`group overflow-hidden rounded-2xl border bg-white transition-shadow ${count ? 'border-[#B99D68] shadow-[0_8px_24px_rgba(75,59,31,0.10)]' : 'border-[#E8E2D8] shadow-[0_4px_16px_rgba(49,39,26,0.045)] hover:shadow-[0_8px_24px_rgba(49,39,26,0.09)]'}`}>
                 <div className="relative aspect-square overflow-hidden bg-[#F0ECE4]">
-                  <img src={product.image} alt={product.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
+                  <img src={selectedVariant?.image || product.image} alt={`${product.name}${selectedVariant?.label ? `, cadran ${selectedVariant.label}` : ''}`} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
                   {count > 0 && (
                     <span className="absolute left-3 top-3 inline-flex h-8 min-w-8 items-center justify-center rounded-full bg-[#292723] px-2 text-xs font-semibold text-white shadow-sm">
                       {count} choisi{count > 1 ? 's' : ''}
@@ -102,6 +123,25 @@ export default function BundleSelectionPage({ initialSelection = [], onSelection
                   <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#9B8058]">{product.categoryLabel}</p>
                   <h2 className="mt-1.5 min-h-10 text-sm font-semibold leading-5 text-[#302D27] sm:text-[15px]">{product.name}</h2>
                   <p className="mt-1 text-xs text-[#81796D]">Prix normal : {formatPrice(product.price)}</p>
+                  {product.variants?.length > 0 && (
+                    <div className="mt-3">
+                      <p className="text-[11px] text-[#6E685E]">{product.variantLabel || 'Couleur'} : <span className="font-semibold text-[#302D27]">{selectedVariant?.label}</span></p>
+                      <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label={`Couleurs disponibles pour ${product.name}`}>
+                        {product.variants.map((variant) => (
+                          <button
+                            key={variant.id}
+                            type="button"
+                            title={variant.label}
+                            aria-label={`Choisir ${variant.label} pour ${product.name}`}
+                            aria-pressed={selectedVariant?.id === variant.id}
+                            onClick={() => setSelectedVariantIds((current) => ({ ...current, [product.id]: variant.id }))}
+                            className={`h-6 w-6 rounded-full border border-black/10 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9B8058] ${selectedVariant?.id === variant.id ? 'ring-2 ring-[#9B8058] ring-offset-2' : 'hover:scale-110'}`}
+                            style={{ backgroundColor: variant.swatch }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="mt-auto pt-3">
                     {count > 0 ? (
                       <div className="flex min-h-10 items-center justify-between rounded-lg border border-[#DED8CD] bg-[#FBF9F5] px-2">
@@ -109,7 +149,7 @@ export default function BundleSelectionPage({ initialSelection = [], onSelection
                           <Minus className="h-4 w-4" aria-hidden="true" />
                         </button>
                         <span aria-live="polite" className="text-sm font-semibold text-[#302D27]">{count}</span>
-                        <button type="button" onClick={() => addModel(product.id)} disabled={isAtLimit} aria-label={`Ajouter une autre ${product.name} au duo`} className="flex h-8 w-8 items-center justify-center rounded-md text-[#514C43] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#9B8058]">
+                        <button type="button" onClick={() => addModel(product.id)} disabled={isAtLimit} aria-label={`Ajouter ${product.name} couleur ${selectedVariant?.label || ''} au duo`} className="flex h-8 w-8 items-center justify-center rounded-md text-[#514C43] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#9B8058]">
                           <Plus className="h-4 w-4" aria-hidden="true" />
                         </button>
                       </div>
@@ -161,6 +201,7 @@ export default function BundleSelectionPage({ initialSelection = [], onSelection
                   <div className="min-w-0 flex-1">
                     <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-[#8A8377]">Montre {index + 1}</p>
                     <p className="mt-0.5 truncate text-sm font-semibold text-[#302D27]">{model.name}</p>
+                    {model.selectedColor && <p className="mt-0.5 text-xs text-[#6E685E]">Couleur : {model.selectedColor}</p>}
                   </div>
                   <span className="text-xs font-medium text-[#6E685E]">Inclus</span>
                 </div>

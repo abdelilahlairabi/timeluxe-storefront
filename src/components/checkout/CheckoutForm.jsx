@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, PackageCheck } from 'lucide-react';
-import { formatPrice, PRODUCTS } from '../../data/catalog';
+import { formatPrice, getProductSelectionDetails } from '../../data/catalog';
 
 function normalizeMoroccanPhone(value) {
   let digits = value.replace(/\D/g, '');
@@ -108,7 +108,7 @@ export default function CheckoutForm({ product, onSubmit, initialValues, onEditB
                 { id: 'watchOne', label: 'Première montre' },
                 { id: 'watchTwo', label: 'Deuxième montre' },
               ].map((watch) => {
-                const model = PRODUCTS.find((item) => item.id === formData[watch.id]);
+                const model = getProductSelectionDetails(formData[watch.id]);
 
                 return (
                   <div key={watch.id} className="flex min-w-0 items-center gap-3 rounded-lg border border-[#E7E0D4] bg-white p-3">
@@ -120,6 +120,7 @@ export default function CheckoutForm({ product, onSubmit, initialValues, onEditB
                     <span className="min-w-0">
                       <span className="block text-[10px] font-medium uppercase tracking-[0.1em] text-[#8A8377]">{watch.label}</span>
                       <span className="mt-0.5 block truncate text-xs font-semibold text-[#302D27]">{model?.name || 'À sélectionner'}</span>
+                      {model?.selectedColor && <span className="mt-0.5 block truncate text-[11px] text-[#6E685E]">Couleur : {model.selectedColor}</span>}
                     </span>
                   </div>
                 );

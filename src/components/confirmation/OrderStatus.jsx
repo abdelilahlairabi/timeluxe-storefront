@@ -1,4 +1,4 @@
-import { DELIVERY_FEE, formatPrice, PRODUCTS } from '../../data/catalog';
+import { DELIVERY_FEE, formatPrice, getProductSelectionDetails } from '../../data/catalog';
 
 export default function OrderStatus({ order }) {
   const { product, customer } = order;
@@ -29,7 +29,7 @@ export default function OrderStatus({ order }) {
         <div className="space-y-3 border-b border-[#EEEAE3] py-5">
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#81796D]">Vos deux modèles</p>
           {bundleModels.map((selection, index) => {
-            const model = PRODUCTS.find((item) => item.id === selection.id);
+            const model = getProductSelectionDetails(selection.id);
 
             return (
               <div key={selection.label} className="flex items-center gap-3">
@@ -41,6 +41,7 @@ export default function OrderStatus({ order }) {
                 <div>
                   <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-[#8A8377]">{selection.label}</p>
                   <p className="mt-0.5 text-sm font-medium text-[#302D27]">{model?.name || 'Modèle non sélectionné'}</p>
+                  {model?.selectedColor && <p className="mt-0.5 text-xs text-[#6E685E]">Couleur : {model.selectedColor}</p>}
                 </div>
               </div>
             );

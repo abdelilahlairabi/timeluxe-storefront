@@ -1,4 +1,4 @@
-import { DELIVERY_FEE, formatPrice, PRODUCTS } from '../../data/catalog';
+import { DELIVERY_FEE, formatPrice, getProductSelectionDetails } from '../../data/catalog';
 
 export default function OrderSummary({ product, selectedBundleModelIds = {} }) {
   const quantity = product.quantity || 1;
@@ -27,7 +27,7 @@ export default function OrderSummary({ product, selectedBundleModelIds = {} }) {
       {product.isBundle && (
         <div className="space-y-3 border-b border-[#EAE5DC] py-4">
           {bundleModels.map((selection, index) => {
-            const model = PRODUCTS.find((item) => item.id === selection.id);
+            const model = getProductSelectionDetails(selection.id);
 
             return (
               <div key={selection.label} className="flex items-center gap-3">
@@ -39,6 +39,7 @@ export default function OrderSummary({ product, selectedBundleModelIds = {} }) {
                 <div className="min-w-0">
                   <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-[#8A8377]">{selection.label}</p>
                   <p className="truncate text-xs font-medium text-[#302D27]">{model?.name || 'Choisir dans le formulaire'}</p>
+                  {model?.selectedColor && <p className="mt-0.5 text-[11px] text-[#6E685E]">Couleur : {model.selectedColor}</p>}
                 </div>
               </div>
             );

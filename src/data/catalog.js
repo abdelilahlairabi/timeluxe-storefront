@@ -117,6 +117,26 @@ export const DUO_PACK = {
 
 export const formatPrice = (amount) => `${Number(amount).toLocaleString('fr-FR')} DH`;
 
+export function getProductSelectionDetails(selection) {
+  const productId = typeof selection === 'string'
+    ? selection
+    : selection?.productId || selection?.id;
+  const product = PRODUCTS.find((item) => item.id === productId);
+  if (!product) return null;
+
+  const variantId = typeof selection === 'object' && selection
+    ? selection.variantId || selection.selectedVariantId
+    : undefined;
+  const variant = product.variants?.find((item) => item.id === variantId) || product.variants?.[0];
+
+  return {
+    ...product,
+    image: variant?.image || product.image,
+    selectedColor: variant?.label || '',
+    selectedVariantId: variant?.id || '',
+  };
+}
+
 export function buildOrderMessage({ product, customer }) {
   const quantity = product.quantity || 1;
   const subtotal = product.price * quantity;
@@ -124,12 +144,14 @@ export function buildOrderMessage({ product, customer }) {
   const lines = ['Bonjour TimeLuxe, je souhaite passer cette commande :', ''];
 
   if (product.isBundle) {
-    const firstWatch = PRODUCTS.find((item) => item.id === customer.watchOne);
-    const secondWatch = PRODUCTS.find((item) => item.id === customer.watchTwo);
+    const firstWatch = getProductSelectionDetails(customer.watchOne);
+    const secondWatch = getProductSelectionDetails(customer.watchTwo);
     lines.push(
       'OFFRE PACK DUO — 2 MONTRES AU CHOIX',
       `Montre 1 : ${firstWatch?.name || 'Modèle à confirmer'}`,
+      ...(firstWatch?.selectedColor ? [`Couleur montre 1 : ${firstWatch.selectedColor}`] : []),
       `Montre 2 : ${secondWatch?.name || 'Modèle à confirmer'}`,
+      ...(secondWatch?.selectedColor ? [`Couleur montre 2 : ${secondWatch.selectedColor}`] : []),
       `Prix normal : ${formatPrice(product.compareAtPrice)}`,
       `Économie : ${formatPrice(product.compareAtPrice - product.price)}`,
       `Prix de l’offre : ${formatPrice(subtotal)}`,
