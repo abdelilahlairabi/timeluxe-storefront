@@ -3,16 +3,19 @@ import { BrowserRouter as Router, Navigate, Route, Routes, useLocation, useNavig
 import { DUO_PACK, PRODUCTS } from './data/catalog';
 import Accueil from './components/Accueil';
 import PromotionPage from './components/PromotionPage';
+import BundleSelectionPage from './components/BundleSelectionPage';
 import ProductDetailPage from './components/ProductDetailPage';
 import CheckoutPage from './components/CheckoutPage';
 import ConfirmationPage from './components/ConfirmationPage';
 import AvisStylePage from './components/AvisStylePage';
+import NotFoundPage from './components/NotFoundPage';
 
 function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedProduct, setSelectedProduct] = useState(PRODUCTS[0]);
   const [orderDetails, setOrderDetails] = useState(null);
+  const [bundleSelection, setBundleSelection] = useState([]);
 
   useEffect(() => {
     if (!location.hash) return;
@@ -25,17 +28,47 @@ function AppContent() {
     navigate('/produit');
   };
 
+  const handleOfferClick = () => {
+    setSelectedProduct(DUO_PACK);
+    setOrderDetails(null);
+    setBundleSelection([]);
+    navigate('/selection-pack');
+  };
+
   const handleOrderNow = (product) => {
+    if (product.isBundle) {
+      handleOfferClick();
+      return;
+    }
     setSelectedProduct(product);
     setOrderDetails(null);
+    setBundleSelection([]);
     navigate('/commande');
   };
 
-  const handleOfferClick = () => {
+  const handleBundleSelectionConfirm = ({ watchOne, watchTwo }) => {
+    if (!watchOne || !watchTwo) return;
+    setBundleSelection([watchOne, watchTwo]);
     setSelectedProduct(DUO_PACK);
     setOrderDetails(null);
     navigate('/commande');
   };
+
+  const handleBundleSelectionChange = (selection) => {
+    setBundleSelection(selection.slice(0, 2));
+  };
+
+  const handleEditBundle = () => {
+    navigate('/selection-pack');
+  };
+
+  const initialCheckoutValues = selectedProduct.isBundle
+    ? {
+        ...(orderDetails?.customer || {}),
+        watchOne: orderDetails?.customer?.watchOne || bundleSelection[0] || '',
+        watchTwo: orderDetails?.customer?.watchTwo || bundleSelection[1] || '',
+      }
+    : orderDetails?.customer;
 
   const handleOrderReady = (customer) => {
     setOrderDetails({ product: selectedProduct, customer });
@@ -58,8 +91,18 @@ function AppContent() {
         path="/promotion"
         element={
           <PromotionPage
-            onClaimOffer={() => handleOrderNow(PRODUCTS[0])}
             onSelectDuo={handleOfferClick}
+          />
+        }
+      />
+      <Route
+        path="/selection-pack"
+        element={
+          <BundleSelectionPage
+            initialSelection={bundleSelection}
+            onSelectionChange={handleBundleSelectionChange}
+            onConfirm={handleBundleSelectionConfirm}
+            onBack={() => navigate(-1)}
           />
         }
       />
@@ -77,7 +120,8 @@ function AppContent() {
         element={
           <CheckoutPage
             product={selectedProduct}
-            initialValues={orderDetails?.customer}
+            initialValues={initialCheckoutValues}
+            onEditBundle={handleEditBundle}
             onBack={() => navigate(-1)}
             onSubmit={handleOrderReady}
           />
@@ -98,7 +142,7 @@ function AppContent() {
         }
       />
       <Route path="/avis" element={<AvisStylePage />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

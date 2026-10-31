@@ -6,7 +6,7 @@ export default function ShopFooter() {
     <footer className="border-y border-slate-200 bg-[#F4F5F6] text-slate-700">
       <div className="mx-auto max-w-7xl px-4 py-9 text-center sm:px-6 sm:py-10 lg:px-8">
         <Link to="/" aria-label="TimeLuxe, accueil" className="inline-flex rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-700">
-          <img src="/timeluxe/00-shared/brand/timeluxe-logo.svg" alt="TimeLuxe" className="mx-auto h-9 w-auto sm:h-10" />
+          <img src="/timeluxe/00-shared/brand/timeluxe-emblem.png" alt="Logo TimeLuxe" className="mx-auto h-20 w-20 object-contain sm:h-24 sm:w-24" />
         </Link>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
           Des montres élégantes pour accompagner votre quotidien, partout au Maroc.

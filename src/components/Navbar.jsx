@@ -8,15 +8,10 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link to="/" aria-label="TimeLuxe, accueil" className="flex shrink-0 items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-700">
           <img
-            src="/timeluxe/00-shared/brand/timeluxe-logo.svg"
-            alt=""
-            className="h-8 w-auto object-contain sm:h-9"
-            onError={(event) => {
-              event.currentTarget.style.display = 'none';
-              event.currentTarget.nextElementSibling?.classList.remove('hidden');
-            }}
+            src="/timeluxe/00-shared/brand/timeluxe-emblem.png"
+            alt="Emblème TimeLuxe doré"
+            className="h-11 w-11 shrink-0 object-contain sm:h-12 sm:w-12"
           />
-          <span className="hidden font-serif text-xl font-semibold tracking-wide text-slate-900">TimeLuxe</span>
         </Link>
 
         <nav aria-label="Navigation principale" className="hidden items-center gap-7 md:flex">

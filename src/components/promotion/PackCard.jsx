@@ -20,7 +20,7 @@ export default function PackCard({ onSelect }) {
       </span>
       <span className="flex min-w-0 flex-1 flex-col items-start pt-1 pr-1 lg:gap-1 lg:pl-2">
         <span className="font-sans text-[14px] font-bold leading-tight text-[#171717] lg:text-lg">Pack Duo</span>
-        <span className="mt-0.5 text-[11px] leading-tight text-[#333] sm:text-xs lg:text-sm">2 montres · {formatPrice(DUO_PACK.price)}</span>
+        <span className="mt-0.5 text-[11px] leading-tight text-[#333] sm:text-xs lg:text-sm">2 montres au choix · {formatPrice(DUO_PACK.price)}</span>
         <span className="mt-1.5 inline-flex rounded-full border border-[#D6C39B] px-2 py-0.5 text-[9px] font-semibold leading-tight text-[#A68548] sm:text-[10px] lg:mt-2 lg:px-3 lg:py-1 lg:text-xs">
           Économisez {formatPrice(savings)}
         </span>

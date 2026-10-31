@@ -84,21 +84,30 @@ export function buildOrderMessage({ product, customer }) {
   const quantity = product.quantity || 1;
   const subtotal = product.price * quantity;
   const total = subtotal + DELIVERY_FEE;
-  const lines = [
-    'Bonjour TimeLuxe, je souhaite passer cette commande :',
-    '',
-    `Produit : ${product.name}`,
-    `Quantité : ${product.isBundle ? '1 pack (2 montres)' : quantity}`,
-    `Prix : ${formatPrice(subtotal)}`,
-    `Livraison : ${DELIVERY_FEE === 0 ? 'offerte' : formatPrice(DELIVERY_FEE)}`,
-    `Total à payer à la livraison : ${formatPrice(total)}`,
-  ];
+  const lines = ['Bonjour TimeLuxe, je souhaite passer cette commande :', ''];
 
-  if (customer?.preferredModels?.trim()) {
-    lines.push(`Modèles souhaités : ${customer.preferredModels.trim()}`);
+  if (product.isBundle) {
+    const firstWatch = PRODUCTS.find((item) => item.id === customer.watchOne);
+    const secondWatch = PRODUCTS.find((item) => item.id === customer.watchTwo);
+    lines.push(
+      'OFFRE PACK DUO — 2 MONTRES AU CHOIX',
+      `Montre 1 : ${firstWatch?.name || 'Modèle à confirmer'}`,
+      `Montre 2 : ${secondWatch?.name || 'Modèle à confirmer'}`,
+      `Prix normal : ${formatPrice(product.compareAtPrice)}`,
+      `Économie : ${formatPrice(product.compareAtPrice - product.price)}`,
+      `Prix de l’offre : ${formatPrice(subtotal)}`,
+    );
+  } else {
+    lines.push(
+      `Produit : ${product.name}`,
+      `Quantité : ${quantity}`,
+      `Prix : ${formatPrice(subtotal)}`,
+    );
   }
 
   lines.push(
+    `Livraison : ${DELIVERY_FEE === 0 ? 'offerte' : formatPrice(DELIVERY_FEE)}`,
+    `Total à payer à la livraison : ${formatPrice(total)}`,
     '',
     `Nom : ${customer.fullName}`,
     `Téléphone : +212${customer.phone}`,

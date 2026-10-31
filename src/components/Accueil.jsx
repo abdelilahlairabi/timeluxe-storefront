@@ -7,10 +7,10 @@ import ShopFooter from './ShopFooter';
 import { PRODUCTS } from '../data/catalog';
 
 const styleImages = [
-  { src: '/timeluxe/05-avis-style/style-zellige.jpg', alt: 'Montre TimeLuxe portée près d’un zellige marocain', caption: 'Autour du zellige', featured: true },
-  { src: '/timeluxe/05-avis-style/style-cafe.jpg', alt: 'Montre TimeLuxe à la terrasse d’un café', caption: 'Au café' },
-  { src: '/timeluxe/05-avis-style/style-souk.jpg', alt: 'Montre TimeLuxe dans une ruelle de la médina', caption: 'Dans la médina' },
-  { src: '/timeluxe/05-avis-style/style-lin.jpg', alt: 'Montre TimeLuxe portée avec une chemise en lin', caption: 'Le détail juste' },
+  { src: '/timeluxe/05-avis-style/style-en-ville.png', alt: 'Montre TimeLuxe portée en ville avec une tenue élégante', number: '01', caption: 'En ville', featured: true },
+  { src: '/timeluxe/05-avis-style/style-au-cafe.png', alt: 'Montre TimeLuxe portée à la terrasse d’un café', number: '02', caption: 'Au café' },
+  { src: '/timeluxe/05-avis-style/style-en-route.png', alt: 'Montre TimeLuxe portée pendant un trajet en voiture', number: '03', caption: 'En route' },
+  { src: '/timeluxe/05-avis-style/style-detail-juste.png', alt: 'Montre TimeLuxe portée lors d’un dîner élégant', number: '04', caption: 'Le détail juste' },
 ];
 
 export default function Accueil({ onProductClick, onOrderNow, onOfferClick }) {
@@ -23,35 +23,49 @@ export default function Accueil({ onProductClick, onOrderNow, onOfferClick }) {
         <HeroFilter startingPrice={startingPrice} onOrderNow={() => onOrderNow(PRODUCTS[0])} />
         <PromoOfferContent
           onSelectDuo={onOfferClick}
-          onClaimOffer={() => onOrderNow(PRODUCTS[0])}
         />
 
         <ProductGrid onOrderNow={onOrderNow} onProductClick={onProductClick} />
 
-        <section id="style" className="scroll-mt-28 bg-[#F5F2EC] py-12 sm:py-16 lg:py-20">
-          <div className="mx-auto grid max-w-7xl gap-5 px-4 sm:px-6 lg:grid-cols-12 lg:items-stretch lg:gap-6 lg:px-8">
-            <div
-              className="relative isolate overflow-hidden rounded-xl border border-[#DED5C7] px-6 py-8 sm:px-8 sm:py-10 lg:col-span-4 lg:flex lg:flex-col lg:justify-center"
-              style={{ backgroundImage: 'radial-gradient(circle at 88% 14%, rgba(191, 167, 127, 0.20), transparent 34%), linear-gradient(145deg, #F3EEE6 0%, #E9E0D3 100%)' }}
-            >
-              <div aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-24 -z-10 h-64 w-64 rounded-full border border-[#BFA77F]/20" />
-              <div aria-hidden="true" className="pointer-events-none absolute -bottom-16 -right-16 -z-10 h-48 w-48 rounded-full border border-[#BFA77F]/15" />
-              <h2 className="max-w-sm font-serif text-3xl font-semibold leading-[1.15] tracking-tight text-[#26231F] sm:text-4xl">Le style, au quotidien</h2>
-              <p className="mt-4 max-w-sm text-sm leading-7 text-[#6E675E]">Des instants du quotidien, inspirés par les couleurs et les matières du Maroc.</p>
-              <a href="#collection" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#26231F] underline decoration-[#BFA77F] underline-offset-8 transition-colors hover:text-[#81643B]">
+        <section id="style" className="scroll-mt-28 bg-[#F4F1EB] py-8 sm:py-12 lg:py-[52px]">
+          <div className="mx-auto grid max-w-[1400px] gap-4 px-4 sm:px-6 lg:grid-cols-[0.96fr_1.95fr_0.96fr] lg:gap-5 lg:px-8 lg:h-[min(60vw,664px)] lg:min-h-[560px]">
+            <div className="relative isolate flex min-h-[360px] flex-col overflow-hidden rounded-[18px] bg-gradient-to-br from-[#FAF6EC] via-[#F0E9DC] to-[#D9CCB7] px-7 py-8 sm:px-9 sm:py-10 lg:min-h-0 lg:px-8 xl:px-9">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[42%] opacity-70"
+                style={{ backgroundImage: 'repeating-radial-gradient(ellipse at 0% 10%, transparent 0 12px, rgba(166, 144, 108, 0.19) 13px 14px, transparent 15px 25px)' }}
+              />
+              <div className="my-auto">
+                <p className="mb-3 text-xs font-medium uppercase tracking-[0.17em] text-[#9B8058]">Lifestyle</p>
+                <h2 className="max-w-[270px] font-serif text-4xl font-medium leading-[1.06] tracking-tight text-[#28251F] sm:text-[42px] xl:text-[46px]">Le style,<br />au quotidien</h2>
+                <p className="mt-4 max-w-[270px] text-[15px] leading-[1.55] text-[#514B42]">Du bureau à la soirée, une montre qui suit chaque moment de votre journée.</p>
+              </div>
+              <a href="#collection" className="mt-8 inline-flex w-fit items-center gap-2.5 rounded-lg bg-[#292723] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-[#46413A] lg:mt-0">
                 Voir toute la collection <span aria-hidden="true">→</span>
               </a>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-8 lg:grid-cols-[1.2fr_0.8fr]">
-              {styleImages.map((image) => (
-                <figure
-                  key={image.src}
-                  className={`group relative isolate overflow-hidden rounded-lg bg-[#E9E4DA] ${image.featured ? 'col-span-2 aspect-[16/10] lg:col-span-1 lg:row-span-3 lg:aspect-[4/5]' : 'aspect-[16/9]'}`}
-                >
-                  <img src={image.src} alt={image.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent px-4 pb-3.5 pt-10 sm:px-5 sm:pb-4">
-                    <figcaption className="text-xs font-medium tracking-wide text-white sm:text-sm">{image.caption}</figcaption>
+            {styleImages.filter((image) => image.featured).map((image) => (
+              <figure key={image.src} className="group relative isolate aspect-[4/3] overflow-hidden rounded-[18px] bg-[#D7C6A8] lg:aspect-auto lg:min-h-0">
+                <img src={image.src} alt={image.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-5 pb-5 pt-16 sm:px-7 sm:pb-7">
+                  <figcaption className="flex items-baseline gap-2.5 text-white sm:gap-3">
+                    <span className="font-serif text-3xl text-[#D1BD9B] sm:text-4xl">{image.number}</span>
+                    <span className="text-xl font-semibold sm:text-2xl">{image.caption}</span>
+                  </figcaption>
+                </div>
+              </figure>
+            ))}
+
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:min-h-0 lg:grid-cols-1 lg:grid-rows-3 lg:gap-4">
+              {styleImages.filter((image) => !image.featured).map((image, index) => (
+                <figure key={image.src} className={`group relative isolate aspect-[4/3] overflow-hidden rounded-[18px] bg-[#D7C6A8] ${index === 2 ? 'col-span-2 lg:col-span-1' : ''} lg:aspect-auto lg:min-h-0`}>
+                  <img src={image.src} alt={image.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]" />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent px-4 pb-3.5 pt-12 sm:px-5 sm:pb-4">
+                    <figcaption className="flex items-baseline gap-1.5 text-white sm:gap-2">
+                      <span className="font-serif text-xl text-[#D1BD9B] sm:text-2xl">{image.number}</span>
+                      <span className="text-sm font-semibold sm:text-base">{image.caption}</span>
+                    </figcaption>
                   </div>
                 </figure>
               ))}
@@ -92,7 +106,7 @@ export default function Accueil({ onProductClick, onOrderNow, onOfferClick }) {
       </main>
 
       <ShopFooter />
-      <PromoBottomBar onClaimOffer={() => onOrderNow(PRODUCTS[0])} />
+      <PromoBottomBar onClaimOffer={onOfferClick} />
     </div>
   );
 }
