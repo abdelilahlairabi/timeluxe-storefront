@@ -6,12 +6,47 @@ import ProductGrid from './ProductGrid';
 import ShopFooter from './ShopFooter';
 import { PRODUCTS } from '../data/catalog';
 
+const styleImage = (name, alt, number, caption, width, height, featured = false) => {
+  const basePath = `/timeluxe/05-avis-style/${name}`;
+  const availableWidths = [480, 800, width];
+
+  return {
+    src: `${basePath}-${width}.webp`,
+    srcSet: [...new Set(availableWidths)].map((candidate) => `${basePath}-${candidate}.webp ${candidate}w`).join(', '),
+    width,
+    height,
+    alt,
+    number,
+    caption,
+    featured,
+  };
+};
+
 const styleImages = [
-  { src: '/timeluxe/05-avis-style/style-en-ville.png', alt: 'Montre TimeLuxe portée en ville avec une tenue élégante', number: '01', caption: 'En ville', featured: true },
-  { src: '/timeluxe/05-avis-style/style-au-cafe.png', alt: 'Montre TimeLuxe portée à la terrasse d’un café', number: '02', caption: 'Au café' },
-  { src: '/timeluxe/05-avis-style/style-en-route.png', alt: 'Montre TimeLuxe portée pendant un trajet en voiture', number: '03', caption: 'En route' },
-  { src: '/timeluxe/05-avis-style/style-detail-juste.png', alt: 'Montre TimeLuxe portée lors d’un dîner élégant', number: '04', caption: 'Le détail juste' },
+  styleImage('style-en-ville', 'Montre TimeLuxe portée en ville avec une tenue élégante', '01', 'En ville', 1024, 1024, true),
+  styleImage('style-au-cafe', 'Montre TimeLuxe portée à la terrasse d’un café', '02', 'Au café', 1200, 896),
+  styleImage('style-en-route', 'Montre TimeLuxe portée pendant un trajet en voiture', '03', 'En route', 1200, 896),
+  styleImage('style-detail-juste', 'Montre TimeLuxe portée lors d’un dîner élégant', '04', 'Le détail juste', 1200, 896),
 ];
+
+function LifestyleImage({ image, mobileSizes, desktopSizes, imageClassName = 'group-hover:scale-[1.02]' }) {
+  return (
+    <picture className="absolute inset-0 h-full w-full">
+      <source media="(max-width: 1023px)" type="image/webp" srcSet={image.srcSet} sizes={mobileSizes} />
+      <img
+        src={image.src}
+        srcSet={image.srcSet}
+        sizes={desktopSizes}
+        width={image.width}
+        height={image.height}
+        alt={image.alt}
+        loading="lazy"
+        decoding="async"
+        className={`h-full w-full object-cover transition-transform duration-500 ease-out ${imageClassName}`}
+      />
+    </picture>
+  );
+}
 
 export default function Accueil({ onProductClick, onOrderNow, onOfferClick }) {
   const startingPrice = Math.min(...PRODUCTS.map((product) => product.price));
@@ -47,7 +82,7 @@ export default function Accueil({ onProductClick, onOrderNow, onOfferClick }) {
 
             {styleImages.filter((image) => image.featured).map((image) => (
               <figure key={image.src} className="group relative isolate aspect-[4/3] overflow-hidden rounded-[18px] bg-[#D7C6A8] lg:aspect-auto lg:min-h-0">
-                <img src={image.src} alt={image.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" />
+                <LifestyleImage image={image} mobileSizes="100vw" desktopSizes="(min-width: 1440px) 706px, (min-width: 1024px) 55vw, 100vw" />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent px-5 pb-5 pt-16 sm:px-7 sm:pb-7">
                   <figcaption className="flex items-baseline gap-2.5 text-white sm:gap-3">
                     <span className="font-serif text-3xl text-[#D1BD9B] sm:text-4xl">{image.number}</span>
@@ -60,7 +95,12 @@ export default function Accueil({ onProductClick, onOrderNow, onOfferClick }) {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:min-h-0 lg:grid-cols-1 lg:grid-rows-3 lg:gap-4">
               {styleImages.filter((image) => !image.featured).map((image, index) => (
                 <figure key={image.src} className={`group relative isolate aspect-[4/3] overflow-hidden rounded-[18px] bg-[#D7C6A8] ${index === 2 ? 'col-span-2 lg:col-span-1' : ''} lg:aspect-auto lg:min-h-0`}>
-                  <img src={image.src} alt={image.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]" />
+                  <LifestyleImage
+                    image={image}
+                    mobileSizes={index === 2 ? '(max-width: 1023px) 100vw, 24vw' : '(max-width: 1023px) 50vw, 24vw'}
+                    desktopSizes="(min-width: 1440px) 327px, (min-width: 1024px) 24vw, 50vw"
+                    imageClassName="group-hover:scale-[1.03]"
+                  />
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent px-4 pb-3.5 pt-12 sm:px-5 sm:pb-4">
                     <figcaption className="flex items-baseline gap-1.5 text-white sm:gap-2">
                       <span className="font-serif text-xl text-[#D1BD9B] sm:text-2xl">{image.number}</span>
