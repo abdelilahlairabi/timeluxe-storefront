@@ -34,6 +34,20 @@ export const PRODUCTS = [
     variants: [
       { id: 'bleu', label: 'Bleu', swatch: '#24427A', image: '/timeluxe/00-shared/products/rolex-datejust-bleu.jpg' },
       { id: 'vert', label: 'Vert', swatch: '#286248', image: '/timeluxe/00-shared/products/rolex-datejust-vert.jpg' },
+      { id: 'rouge', label: 'Rouge', swatch: '#A91629', image: '/timeluxe/00-shared/products/rolex-datejust-rouge.webp' },
+    ],
+  },
+  {
+    id: 'omega-seamaster-argent',
+    name: 'Omega Seamaster',
+    category: 'classique',
+    categoryLabel: 'Classique',
+    price: 199,
+    image: '/timeluxe/00-shared/products/omega-seamaster-argent.webp',
+    variantLabel: 'Couleur du cadran',
+    variants: [
+      { id: 'argent', label: 'Argent', swatch: '#D5D3CC', image: '/timeluxe/00-shared/products/omega-seamaster-argent.webp' },
+      { id: 'noir', label: 'Noir', swatch: '#252525', image: '/timeluxe/00-shared/products/omega-seamaster-noir.webp' },
     ],
   },
   {
